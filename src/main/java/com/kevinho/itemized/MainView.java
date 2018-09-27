@@ -1,17 +1,24 @@
 package com.kevinho.itemized;
 
+import com.kevinho.itemized.navigator.PageNavigator;
 import com.kevinho.itemized.view.LogoPanelView;
 import com.kevinho.itemized.view.MenuView;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
+import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 
 @SpringUI(path="/home")
 public class MainView extends UI {
 
     private Panel changeTab = new Panel();
 
+    @Autowired
+    private ApplicationContext applicationContext;
+    @Autowired
+    private SpringViewProvider springViewProvider;
     @Autowired
     private LogoPanelView logoPanelView;
     @Autowired
@@ -56,7 +63,16 @@ public class MainView extends UI {
         root.setComponentAlignment(logoPanel, Alignment.TOP_CENTER);
         root.setComponentAlignment(contentPanel, Alignment.MIDDLE_CENTER);
         root.setExpandRatio(contentPanel,2);
+
+        initNavigator();
         setContent(root);
 
+    }
+
+    private void initNavigator(){
+        PageNavigator pageNavigator = new PageNavigator(this, changeTab);
+        applicationContext.getAutowireCapableBeanFactory().autowireBean(pageNavigator);
+        pageNavigator.addProvider(springViewProvider);
+        pageNavigator.navigateTo("/additem");
     }
 }
