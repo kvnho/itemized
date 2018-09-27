@@ -1,6 +1,7 @@
 package com.kevinho.itemized.view;
 
 import com.kevinho.itemized.entity.Item;
+import com.kevinho.itemized.service.RemoveItemService;
 import com.kevinho.itemized.service.ShowItemsService;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
@@ -37,6 +38,17 @@ public class ShowAllItemView implements UIComponentBuilder{
             editButton = new Button("Edit");
             editButton.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 
+            deleteButton.addClickListener(clickEvent -> {
+                Item item = itemGrid.asSingleSelect().getValue();
+
+                listDataProvider.getItems().remove(item);
+                listDataProvider.refreshAll();
+                removeItemService.removeItem(item);
+                Notification.show("Successfully removed!", Notification.Type.HUMANIZED_MESSAGE);
+
+            });
+            //editButton.addClickListener();
+
             editButton.setWidth("100%");
             deleteButton.setWidth("100%");
 
@@ -57,16 +69,21 @@ public class ShowAllItemView implements UIComponentBuilder{
             addComponents(itemGrid, buttonsLayout);
             return this;
         }
+
     }
 
     public void refreshTable(){
         items = showItemsService.getAllItems();
         listDataProvider = DataProvider.ofCollection(items);
         itemGrid.setDataProvider(listDataProvider);
+
     }
 
     @Autowired
     private ShowItemsService showItemsService;
+    @Autowired
+    private RemoveItemService removeItemService;
+
 
     @Override
     public Component createComponent() {
