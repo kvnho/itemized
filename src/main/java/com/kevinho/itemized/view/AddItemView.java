@@ -47,6 +47,15 @@ public class AddItemView {
 
             saveButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
 
+            name.setWidth("100%");
+            color.setWidth("100%");
+            size.setWidth("100%");
+            price.setWidth("100%");
+
+
+            saveButton.setWidth("50%");
+            resetButton.setWidth("50%");
+
             return this;
         }
 
@@ -64,9 +73,10 @@ public class AddItemView {
 
         public Component layout(){
             setMargin(true);
+            setSpacing(true);
 
-            GridLayout gridLayout = new GridLayout(2, 3);
-            gridLayout.setSizeUndefined();
+            GridLayout gridLayout = new GridLayout(2, 10);
+            gridLayout.setSizeFull();
             gridLayout.setSpacing(true);
 
             gridLayout.addComponent(name, 0,0);
@@ -75,10 +85,12 @@ public class AddItemView {
             gridLayout.addComponent(size, 0,1);
             gridLayout.addComponent(price, 1,1);
 
-            HorizontalLayout buttons = new HorizontalLayout();
-            buttons.addComponents(saveButton, resetButton);
+            gridLayout.addComponent(saveButton, 0,9);
+            gridLayout.addComponent(resetButton, 1,9);
 
-            gridLayout.addComponent(buttons);
+
+            gridLayout.setComponentAlignment(saveButton, Alignment.MIDDLE_RIGHT);
+            gridLayout.setComponentAlignment(resetButton, Alignment.MIDDLE_LEFT);
 
             return gridLayout;
         }

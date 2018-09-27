@@ -45,16 +45,16 @@ public class MainView extends UI {
         contentLayout.setMargin(true);
 
         Component logo = logoPanelView.createComponent();
-        Component menu = menuView.createComponent();
+        //Component menu = menuView.createComponent();
 
-        contentLayout.addComponent(menu);
+        //contentLayout.addComponent(menu);
         contentLayout.addComponent(changeTab);
 
-        contentLayout.setComponentAlignment(menu, Alignment.TOP_CENTER);
-        contentLayout.setComponentAlignment(changeTab, Alignment.TOP_CENTER);
+        //contentLayout.setComponentAlignment(menu, Alignment.TOP_CENTER);
+        contentLayout.setComponentAlignment(changeTab, Alignment.MIDDLE_CENTER);
 
-        contentLayout.setExpandRatio(menu, 1);
-        contentLayout.setExpandRatio(changeTab, 3);
+        //contentLayout.setExpandRatio(menu, 1);
+        //contentLayout.setExpandRatio(changeTab, 3);
 
         logoPanel.setContent(logo);
         contentPanel.setContent(contentLayout);
@@ -73,6 +73,6 @@ public class MainView extends UI {
         PageNavigator pageNavigator = new PageNavigator(this, changeTab);
         applicationContext.getAutowireCapableBeanFactory().autowireBean(pageNavigator);
         pageNavigator.addProvider(springViewProvider);
-        pageNavigator.navigateTo("/additem");
+        pageNavigator.navigateTo("/inventory");
     }
 }

@@ -5,12 +5,13 @@ import com.kevinho.itemized.listener.ItemSavedListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@SpringView(name="/additem", ui= MainView.class)
+@SpringView(name="/inventory", ui= MainView.class)
 public class ItemView extends VerticalLayout implements View, ItemSavedListener {
 
     private TabSheet tabSheet;
@@ -29,8 +30,14 @@ public class ItemView extends VerticalLayout implements View, ItemSavedListener 
         Component addItemsTab = addItemView.createComponent(this);
         Component viewItemsTab = showAllItemView.createComponent();
 
-        tabSheet.addTab(addItemsTab, "Add Item");
-        tabSheet.addTab(viewItemsTab, "View Inventory");
+        VerticalLayout addItemsTabLayout = new VerticalLayout(addItemsTab);
+        addItemsTabLayout.setComponentAlignment(addItemsTab, Alignment.MIDDLE_CENTER);
+
+
+
+        tabSheet.addTab(viewItemsTab, "Inventory");
+        tabSheet.addTab(addItemsTabLayout, "Add Item");
+
 
         addComponent(tabSheet);
 
